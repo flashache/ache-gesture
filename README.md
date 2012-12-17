@@ -1,4 +1,4 @@
-# ache-gesture: Gesture-recognition library for Adobe AIR
+# achegesture: Gesture-recognition library for Adobe AIR
 ============
 
 Gesture-recognition framework for Adobe AIR Mobile App based on [Starling Framework](http://www.starling-framework.org/)
