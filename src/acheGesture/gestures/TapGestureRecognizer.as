@@ -31,8 +31,8 @@ package acheGesture.gestures
 		
 		override public function _onInitGesture(callback:Object, config:Object, g:GestureManager):Boolean
 		{
-			if(config[GestureConfigKey.MAX_DIST] != null) _max_drag_dist = uint(config[GestureConfigKey.MAX_DIST]);
-			if(config[GestureConfigKey.POINT_MODE] != null) _pointMode = config[GestureConfigKey.POINT_MODE];
+			if(config != null && config[GestureConfigKey.MAX_DIST] != null) _max_drag_dist = uint(config[GestureConfigKey.MAX_DIST]);
+			if(config != null && config[GestureConfigKey.POINT_MODE] != null) _pointMode = config[GestureConfigKey.POINT_MODE];
 			return super._onInitGesture(callback, config, g);
 		}
 		

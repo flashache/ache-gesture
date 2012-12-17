@@ -78,7 +78,7 @@ package acheGesture.gestures
 			this._callBack = callback;
 			this._config = config;
 			this._g = g;			
-			if(_config["shouldReceiveTouch"] != null) _shouldReceiveTouch = _config["shouldReceiveTouch"];			
+			if(_config != null && _config["shouldReceiveTouch"] != null) _shouldReceiveTouch = _config["shouldReceiveTouch"];			
 			_result = new AcheGestureEvent(AcheGestureEvent.ACHE_GESTURE, _g, GestureState.RECOGNIZED);		
 			return true;
 		}
