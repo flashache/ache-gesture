@@ -94,9 +94,9 @@ package acheGesture
 		{
 			var pg:PropGesture = _firstG;
 			while (pg) {
-				if(pg.t._callBack.hasOwnProperty("requireGestureRecognizerToFail")  && pg.t._callBack.requireGestureRecognizerToFail != null)
+				if(pg.t._callBack.hasOwnProperty("requireGestureToFail")  && pg.t._callBack.requireGestureToFail != null)
 				{	
-					var tg:PropGesture = _ref[pg.t._callBack.requireGestureRecognizerToFail.type];
+					var tg:PropGesture = _ref[pg.t._callBack.requireGestureToFail.type];
 					pg._f = tg;
 					tg._o = pg;		
 					tg.t._requireGestureRecognizerToFail = true;

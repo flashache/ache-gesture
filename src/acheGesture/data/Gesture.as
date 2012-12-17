@@ -9,7 +9,7 @@ package acheGesture.data
 		
 		public var config:Object;
 		
-		public var requireGestureRecognizerToFail:Gesture;
+		public var requireGestureToFail:Gesture;
 		
 		public var recognized:Function;	
 		public var possible:Function;
@@ -47,7 +47,9 @@ package acheGesture.data
 		public function onEnded(value:Function):Gesture { return _set("ended", value); }
 		public function onCancelled(value:Function):Gesture { return _set("cancelled", value); }
 		
-		public function gestureRecognizerShouldReceiveTouch(value:Function):Gesture { return setConfig("shouldReceiveTouch", value);}
+		public function gestureRecognizerShouldReceiveTouch(value:Function):Gesture { return setConfig("shouldReceiveTouch", value) } ;
+			
+		public function requireGestureRecognizerToFail(value:Gesture): Gesture { return  _set("requireGestureToFail", value); }
 			
 		public function setConfig(key:String, value:*):Gesture
 		{

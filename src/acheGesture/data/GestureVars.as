@@ -47,7 +47,6 @@ package acheGesture.data
 			return _set("onTrigger", value);
 		}
 		
-		/** The generic Object populated by all of the method calls in the LoaderMaxVars instance. This is the raw data that gets passed to the loader. **/
 		public function get vars():Object {
 			return _vars;
 		}
