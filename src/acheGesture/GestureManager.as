@@ -16,31 +16,29 @@ package acheGesture
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	
+	/**
+	 *  
+	 * @author qidonghui
+	 * 
+	 */	
 	public class GestureManager
 	{
 		/**
-		 * 手势配置的参数 
-		 */
-		public var vars:Object;
-		
-		/**
-		 * 作用的显示对象 
+		 * displayobject linked to this gesure
 		 */		
 		public var target:DisplayObject;
 		
 		/**
-		 * 手势的其实位置
+		 * global x position when receive TouchPhase.BEGAN event
 		 */		
 		public var startGlobalX:Number;
+		/**
+		 * global y position when receive TouchPhase.BEGAN event 
+		 */		
 		public var startGlobalY:Number;
 		
 		/**
-		 * 整个手势计算链中的第一个 
-		 */		
-		public var _firstG:PropGesture;
-		
-		/**
-		 * 是否允许多个手势同时作用 
+		 * if all gesture behave simultaneously 
 		 */		
 		private var _allowSimultaneous:Boolean;
 		
@@ -49,7 +47,26 @@ package acheGesture
 		 */		
 		private var _ref:Object = {};
 		
-		private var _ts:Vector.<Touch>;	
+		/**
+		 * first propgesture of all the gesture-recognizers
+		 * @private
+		 */		
+		public var _firstG:PropGesture;
+		
+		/**
+		 * config object for GestureManager instance
+		 * @private
+		 */
+		public var vars:Object;
+		
+		/**
+		 * Touch objects from Starling Touch Event
+		 */
+		private var _ts:Vector.<Touch>;
+		
+		/**
+		 * Touch object from Starling Touch Event 
+		 */		
 		private var _t:Touch;		
 		
 		/**
@@ -67,6 +84,15 @@ package acheGesture
 			"rotate": RotationGestureRecognizer
 		};
 		
+		/**
+		 * Constructor
+		 * Creates a GestureManager instance
+		 *  
+		 * @param target
+		 * @param vars
+		 * @param allowSimultaneous
+		 * 
+		 */		
 		public function GestureManager(target:DisplayObject, vars:Object = null, allowSimultaneous:Boolean = false)
 		{
 			this.vars = vars || {};
@@ -74,6 +100,7 @@ package acheGesture
 			this._allowSimultaneous = allowSimultaneous;
 			_initGesture();
 		}
+		
 		
 		protected function _initGesture():void
 		{
@@ -106,6 +133,13 @@ package acheGesture
 			}
 		}
 		
+		/**
+		 * @private
+		 *  
+		 * @param name
+		 * @param value
+		 * 
+		 */		
 		public function gestureRecognizerStateChange(name:String, value:Boolean):void
 		{
 			var pg:PropGesture = _ref[name];
@@ -310,9 +344,10 @@ package acheGesture
 		public function getTouch():Touch { return _ts[0]; }
 		
 		/**
-		 * 添加某种手势 
+		 * Add some gesutres to this gesture-recognizers' chain after the GestureManger instance created.
+		 * 
 		 * @param vars
-		 * @replaceExist	是否覆盖相同的手势
+		 * @replaceExist	if will replace the same type gesture
 		 */		
 		public function add(vars:Object, replaceExist:Boolean = false):void
 		{
@@ -328,12 +363,13 @@ package acheGesture
 					}
 				}
 			}else{
-				//TO DO 完成覆盖相同手势的操作
+				//TO DO replace the same type gestures
 			}
 		}
 		
 		/**
-		 * 移除莫一种手势 
+		 * remove certain type of gesture-recognizer
+		 *  
 		 * @param gestureType
 		 * 
 		 */		
@@ -355,14 +391,21 @@ package acheGesture
 		}
 		
 		/**
-		 * 销毁当前的和target关联的手势 
-		 * 
+		 * dispose all the gestures managed by this instance
 		 */		
 		public function dispose():void
 		{
 			
 		}
 		
+		/**
+		 *  
+		 * @param target
+		 * @param vars
+		 * @param allowSimultaneous
+		 * @return 
+		 * 
+		 */		
 		public static function add(target:DisplayObject, vars:Object = null, allowSimultaneous:Boolean = false):GestureManager
 		{
 			var g:GestureManager = new GestureManager(target, vars, allowSimultaneous);
