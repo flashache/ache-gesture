@@ -11,8 +11,8 @@ AcheGesture Introduction:[http://www.flashache.com/2012/12/17/ache-gesture-intro
 
 ##Features:
 * Provide seven based gestures, include: Tap, Double Tap, Pinch, Pan, Swipe, Rotate and Long press.
-* Provide seven based gestures, include: Tap, Double Tap, Pinch, Pan, Swipe, Rotate and Long press.
 * Each gesture of the framework can be config, "Long press" for example, can config time threshold for recognition.
+* Handle conflict between different gestures, like one gesture recognition requeres another recognition to fail(requireGestureRecognizerToFail), recognition priority, simultaneous effect and so on.
 * Use callback function to send different state of the gestures(discrete gestures and continuous gestures), gestures' state includes:recognized, possible, failed, began, changed, ended and cancelled.
 * Extendable, AcheGesture framework can be extended for new gesture-recognizers according to the projects use GestureRecognizerPlugin, and certain gesture-recognizers can be activate when needed.
 * Free and open source, can be used under any circumstances.
