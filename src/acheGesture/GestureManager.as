@@ -17,25 +17,46 @@ package acheGesture
 	import starling.events.TouchPhase;
 	
 	/**
-	 *  
-	 * @author qidonghui
 	 * 
+	 * 
+	 * @author qidonghui
 	 */	
 	public class GestureManager
 	{
 		/**
-		 * displayobject linked to this gesure
+		 * All the available gesture-recognizers
+		 * @private 
+		 */		
+		public static var _gesturePlugins:Object = {
+			"tap": TapGestureRecognizer,
+			"doubleTap" : DoubleTapGestureRecognizer,
+			"hold": HoldGestureRecognizer,
+			"swipe": SwipeGestureRecognizer,
+			"pan": PanGestureRecognizer,
+			"pinch" : PinchGestureRecognizer,
+			"rotate": RotationGestureRecognizer
+		};
+		
+		/**
+		 * display object linked to this gesure manager instance
 		 */		
 		public var target:DisplayObject;
 		
 		/**
-		 * global x position when receive TouchPhase.BEGAN event
+		 * global x position when receive TouchPhase.BEGAN event from Starling
 		 */		
 		public var startGlobalX:Number;
 		/**
-		 * global y position when receive TouchPhase.BEGAN event 
+		 * global y position when receive TouchPhase.BEGAN event from Starling
 		 */		
 		public var startGlobalY:Number;
+		
+		/**
+		 * config object for GestureManager instance
+		 * 
+		 * @private
+		 */
+		public var vars:Object;
 		
 		/**
 		 * if all gesture behave simultaneously 
@@ -51,13 +72,7 @@ package acheGesture
 		 * first propgesture of all the gesture-recognizers
 		 * @private
 		 */		
-		public var _firstG:PropGesture;
-		
-		/**
-		 * config object for GestureManager instance
-		 * @private
-		 */
-		public var vars:Object;
+		public var _firstG:PropGesture;		
 		
 		/**
 		 * Touch objects from Starling Touch Event
@@ -70,27 +85,18 @@ package acheGesture
 		private var _t:Touch;		
 		
 		/**
-		 * 对所有创建的手势的引用查询，使用target作为键值
+		 * Use the target as key value to track all the gesture-managers has been created
 		 */		
-		private static var _gestures:Dictionary = new Dictionary(false);
-		
-		public static var _gesturePlugins:Object = {
-			"tap": TapGestureRecognizer,
-			"doubleTap" : DoubleTapGestureRecognizer,
-			"hold": HoldGestureRecognizer,
-			"swipe": SwipeGestureRecognizer,
-			"pan": PanGestureRecognizer,
-			"pinch" : PinchGestureRecognizer,
-			"rotate": RotationGestureRecognizer
-		};
+		private static var _gestures:Dictionary = new Dictionary(false);				
 		
 		/**
 		 * Constructor
+		 * 
 		 * Creates a GestureManager instance
 		 *  
-		 * @param target
-		 * @param vars
-		 * @param allowSimultaneous
+		 * @param target				Display object linked to this gesture manager instance
+		 * @param vars					Config object, using acheGesture.data.GestureVars is recommended
+		 * @param allowSimultaneous		Allow the gesture-manager behave simultaneously
 		 * 
 		 */		
 		public function GestureManager(target:DisplayObject, vars:Object = null, allowSimultaneous:Boolean = false)
@@ -101,7 +107,7 @@ package acheGesture
 			_initGesture();
 		}
 		
-		
+		/** @private **/		
 		protected function _initGesture():void
 		{
 			var p:String,  plugin:Object;
@@ -138,7 +144,6 @@ package acheGesture
 		 *  
 		 * @param name
 		 * @param value
-		 * 
 		 */		
 		public function gestureRecognizerStateChange(name:String, value:Boolean):void
 		{
@@ -339,7 +344,18 @@ package acheGesture
 			}
 		}
 		
-		public function getTouches():Vector.<Touch> { return _ts; }		
+		/**
+		 * Get the Touch objects from the Starling
+		 *  
+		 * @return 
+		 * 
+		 */		
+		public function getTouches():Vector.<Touch> { return _ts; }	
+		/**
+		 * Get the Touch object from the Starling 
+		 * @return 
+		 * 
+		 */		
 		public function getTouch():Touch { return _ts[0]; }
 		
 		/**
@@ -390,6 +406,7 @@ package acheGesture
 		}
 		
 		/**
+		 * TO DO
 		 * dispose all the gestures managed by this instance
 		 */		
 		public function dispose():void
@@ -416,6 +433,12 @@ package acheGesture
 			return g;
 		}
 		
+		/**
+		 * Remove all of the gesture-managers linked to this target display object
+		 *  
+		 * @param target
+		 * 
+		 */		
 		public static function removeAll(target:DisplayObject):void
 		{
 			
