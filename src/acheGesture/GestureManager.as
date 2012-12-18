@@ -223,9 +223,8 @@ package acheGesture
 			}
 			
 			loopGesture();
-			if(vars.onTouch != null && vars.onTouch is Function) vars.onTouch(ts);					
+			if(vars.onTouch != null && vars.onTouch is Function) vars.onTouch(ts);
 			
-			//循环当前绑定的识别手势链，每次都是从第一个开始，并利用_next指针。
 			function loopGesture():void
 			{				
 				var pg:PropGesture = _firstG;			

@@ -33,6 +33,15 @@ package acheGesture.data
 			return _set("dispatchEvent", value);
 		}
 		
+		/**
+		 * When GestureManager receive touch event from the target display object, it will call this callback function.
+		 * Callback function sent here should have one typed as Vector.<Touch> parameter for example: 
+		 * private function onTouch(ts: Vector.<Touch>): void
+		 *  
+		 * @param value
+		 * @return 
+		 * 
+		 */		
 		public function onTouch(value:Function):GestureVars { return _set("onTouch", value); }
 		
 		////////////////////////////////////////////////////////////////////
