@@ -11,6 +11,12 @@ package acheGesture.gestures
 	import starling.events.Touch;
 	import starling.events.TouchPhase;
 	
+	/**
+	 * @private
+	 *  
+	 * @author qidonghui
+	 * 
+	 */	
 	public class PanGestureRecognizer extends GestureRecognizerPlugin
 	{
 		private var _hasBegan:Boolean = false;

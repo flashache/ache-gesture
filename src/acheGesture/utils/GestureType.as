@@ -1,7 +1,8 @@
 package acheGesture.utils
 {
 	/**
-	 * 库中包含的手势类型 
+	 * all the gesture types 
+	 * 
 	 * @author qidonghui
 	 * 
 	 */	

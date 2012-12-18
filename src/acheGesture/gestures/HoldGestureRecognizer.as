@@ -10,6 +10,12 @@ package acheGesture.gestures
 	import starling.events.Touch;
 	import starling.events.TouchPhase;
 
+	/**
+	 * @private
+	 *  
+	 * @author qidonghui
+	 * 
+	 */	
 	public class HoldGestureRecognizer extends GestureRecognizerPlugin
 	{
 		private var _timeThreshold:Number = 1000;

@@ -1,69 +1,64 @@
 package acheGesture.gestures
 {
 	import acheGesture.GestureManager;
-	import acheGesture.core.PropGesture;
 	import acheGesture.events.AcheGestureEvent;
 	import acheGesture.utils.GestureState;
 	
-	import flash.display.DisplayObject;
-	
 	import starling.events.Touch;
 
+	/**
+	 * Base class of all the gesture recognizers
+	 *  
+	 * @author qidonghui
+	 * 
+	 */	
 	public class GestureRecognizerPlugin
 	{
-		/**
-		 * @private 
-		 */		
+		/** @private **/
 		public var _gestureType:String;
 		
 		/**
-		 *  是否在一个手势识别的生命周期内
-		 */		
+		 * @private
+		 * valule to know if one gesture-recognizer is in the checking process
+		 */	
 		public var _inProcess:Boolean = false;
 		
-		/**
-		 * @private 
-		 */		
+		/** @private **/	
 		public var _g:GestureManager;
 		
-		/**
-		 * @private 
-		 */		
+		/** @private **/	
 		public var _config:Object;
 		
-		/**
-		 * @private 
-		 */		
+		/** @private **/	
 		public var _priority:int = 0;
 		
-		/**
-		 * @private 
-		 */		
+		/** @private **/	
 		public var _numTouchesRequired:int = 1;
 		
-		/**
-		 * @private 
-		 */		
+		/** @private **/		
 		public var _continuous:Boolean = false;
 		
 		/**
-		 * 所有绑定的回调函数，包括回调包括以下6种
+		 * all the callback function will have these types:
 		 * recognized， possible， failed， began， changed， ended
+		 * 
 		 * @private 
 		 */		
 		public var _callBack:Object;
 		
-		/**
-		 * @private 
-		 */		
+		/** @private **/	
 		public var _requireGestureRecognizerToFail:Boolean;
 		
+		/** @private **/
 		protected var _possible:Boolean = true;
 		
+		/** @private **/
 		protected var _result:AcheGestureEvent;
 		
+		/** @private **/
 		protected var _shouldReceiveTouch:Function;
 		
+		/** @private **/
 		public function GestureRecognizerPlugin(name:String="", priority:int=0, requireGestureRecognizerToFail:Boolean = false, continuous:Boolean = false, numTouchesRequired:int = 1)
 		{
 			_gestureType = name;
@@ -73,42 +68,8 @@ package acheGesture.gestures
 			_numTouchesRequired = numTouchesRequired;
 		}
 		
-		public function _onInitGesture(callback:Object, config:Object, g:GestureManager):Boolean
-		{
-			this._callBack = callback;
-			this._config = config;
-			this._g = g;			
-			if(_config != null && _config["shouldReceiveTouch"] != null) _shouldReceiveTouch = _config["shouldReceiveTouch"];			
-			_result = new AcheGestureEvent(AcheGestureEvent.ACHE_GESTURE, _g, GestureState.RECOGNIZED);		
-			return true;
-		}
-		
 		/**
-		 * 执行识别回调
-		 * 离散的手势，在等待状态之后执行
-		 */		
-		public function executeGesturRecognizedCallback():void
-		{
-			if(_callBack.recognized)
-			{
-				_result.state = GestureState.RECOGNIZED;
-				_callBack.recognized(_result);
-			}
-		}
-		
-		public function checkGesture(ts:Vector.<Touch>):Boolean
-		{
-			return false;
-		}
-		
-		public function updateValue(ts:Vector.<Touch>):Boolean
-		{
-			//返回true，说明这个连续的手势开始作用，当返回false的时候，说明这个连续的手势停止执行
-			return true;
-		}
-		
-		/**
-		 * 注入某一种自定义手势 
+		 * Inject customized gesture-recognizers.
 		 * @param gestures
 		 * 
 		 */		
@@ -120,6 +81,41 @@ package acheGesture.gestures
 			}
 		}
 		
+		/** @private **/
+		public function _onInitGesture(callback:Object, config:Object, g:GestureManager):Boolean
+		{
+			this._callBack = callback;
+			this._config = config;
+			this._g = g;			
+			if(_config != null && _config["shouldReceiveTouch"] != null) _shouldReceiveTouch = _config["shouldReceiveTouch"];			
+			_result = new AcheGestureEvent(AcheGestureEvent.ACHE_GESTURE, _g, GestureState.RECOGNIZED);		
+			return true;
+		}
+		
+		/** @private **/	
+		public function executeGesturRecognizedCallback():void
+		{
+			if(_callBack.recognized)
+			{
+				_result.state = GestureState.RECOGNIZED;
+				_callBack.recognized(_result);
+			}
+		}
+		
+		/** @private **/
+		public function checkGesture(ts:Vector.<Touch>):Boolean
+		{
+			return false;
+		}
+		
+		/** @private **/
+		public function updateValue(ts:Vector.<Touch>):Boolean
+		{
+			//return true means this continuous gesture has began to effect, while return false means the gestures has stoped.
+			return true;
+		}
+		
+		/** @private **/
 		protected function gesturePossible(value:Boolean):void
 		{
 			_possible = value;
@@ -131,6 +127,7 @@ package acheGesture.gestures
 			}
 		}
 		
+		/** @private **/
 		protected function gestureBegan():void
 		{
 			if(_callBack.began)
@@ -140,6 +137,7 @@ package acheGesture.gestures
 			}			
 		}
 		
+		/** @private **/
 		protected function gestureEnded():void
 		{
 			if(_callBack.ended)

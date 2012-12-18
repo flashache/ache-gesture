@@ -2,6 +2,7 @@ package acheGesture.utils
 {
 	/**
 	 * 所有的手势（分为“连续”和“离散”手势）可能的状态 
+	 *
 	 * @author qidonghui
 	 * 
 	 */	

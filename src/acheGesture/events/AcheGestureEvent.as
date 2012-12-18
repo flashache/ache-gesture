@@ -5,6 +5,11 @@ package acheGesture.events
 	import starling.display.DisplayObject;
 	import starling.events.Event;
 
+	/**
+	 *  
+	 * @author qidonghui
+	 * 
+	 */	
 	public class AcheGestureEvent extends Event
 	{
 		public static const ACHE_GESTURE:String = "acheGesture";
@@ -12,10 +17,10 @@ package acheGesture.events
 		public var gm:GestureManager;
 		
 		/**
-		 * 手势状态, 所有种类在acheGesture.utils.GestureState 
+		 * gesture state, all types of state is defined in acheGesture.utils.GestureState 
 		 */		
 		public var state:String;
-			
+		
 		public var dx:Number;
 		
 		public var dy:Number;

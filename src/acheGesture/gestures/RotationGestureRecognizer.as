@@ -3,6 +3,8 @@ package acheGesture.gestures
 	import acheGesture.utils.GestureType;
 	
 	/**
+	 * @private 
+	 * 
 	 * TO DO
 	 * @author qidonghui
 	 * 

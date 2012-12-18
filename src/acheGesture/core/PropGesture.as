@@ -1,5 +1,11 @@
 package acheGesture.core
 {
+	/**
+	 * @private
+	 *  
+	 * @author qidonghui
+	 * 
+	 */	
 	public class PropGesture
 	{
 		/**
@@ -39,10 +45,19 @@ package acheGesture.core
 		 */		
 		public var c:Boolean;
 		
+		/**
+		 *  execute gestur recognized callback function name
+		 */		
 		public var p0:String;
 		
+		/**
+		 *  check gesture function name
+		 */		
 		public var p1:String;
 		
+		/**
+		 * update value function name 
+		 */		
 		public var p2:String;
 		
 		/** Priority **/

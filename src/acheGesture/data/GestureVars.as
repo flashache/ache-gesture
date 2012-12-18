@@ -1,5 +1,11 @@
 package acheGesture.data
 {
+	/**
+	 * Config class for GestureManager.add method
+	 *  
+	 * @author qidonghui
+	 * 
+	 */	
 	public class GestureVars
 	{
 		/** @private **/
@@ -42,9 +48,8 @@ package acheGesture.data
 		 * @return 
 		 * 
 		 */		
-		public function onTouch(value:Function):GestureVars { return _set("onTouch", value); }
+		public function onTouch(value:Function):GestureVars { return _set("onTouch", value); }		
 		
-		////////////////////////////////////////////////////////////////////
 		public function onTap(value:Object):GestureVars  { return _set("tap", value); }		
 		public function onDoubleTap(value:Object):GestureVars { return _set("doubleTap", value); }
 		public function onPan(value:Object):GestureVars { return _set("pan", value); }

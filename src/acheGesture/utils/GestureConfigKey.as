@@ -1,7 +1,8 @@
 package acheGesture.utils
 {
 	/**
-	 * 各种手势可配置的一些特性键值 
+	 * All the keys for config of all the gestures
+	 * 
 	 * @author qidonghui
 	 * 
 	 */	

@@ -7,6 +7,12 @@ package acheGesture.gestures
 	import starling.events.Touch;
 	import starling.events.TouchPhase;
 
+	/**
+	 * @private
+	 *  
+	 * @author qidonghui
+	 * 
+	 */	
 	public class PinchGestureRecognizer extends GestureRecognizerPlugin
 	{
 		private var _numPointToCheck:int = 3;

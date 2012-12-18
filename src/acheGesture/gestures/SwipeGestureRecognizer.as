@@ -8,6 +8,12 @@ package acheGesture.gestures
 	import starling.events.Touch;
 	import starling.events.TouchPhase;
 
+	/**
+	 * @private
+	 *  
+	 * @author qidonghui
+	 * 
+	 */	
 	public class SwipeGestureRecognizer extends GestureRecognizerPlugin
 	{
 		private var _point_max:Number = 5;

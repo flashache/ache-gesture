@@ -9,6 +9,12 @@ package acheGesture.gestures
 	import starling.events.Touch;
 	import starling.events.TouchPhase;
 	
+	/**
+	 * @private
+	 *  
+	 * @author qidonghui
+	 * 
+	 */	
 	public class DoubleTapGestureRecognizer extends GestureRecognizerPlugin
 	{
 		private var _interval:Number = 300;
