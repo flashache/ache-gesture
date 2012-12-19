@@ -9,6 +9,8 @@ AcheGesture简介:[http://www.flashache.com/2012/12/17/ache-gesture-introduction
 
 AcheGesture Introduction:[http://www.flashache.com/2012/12/17/ache-gesture-introduction-en/](http://www.flashache.com/2012/12/17/ache-gesture-introduction-en/)
 
+ASDoc:[http://flashache.github.com/ache-gesture/asdoc/index.html](http://flashache.github.com/ache-gesture/asdoc/index.html)
+
 ##Features:
 * Provide seven basic gestures, include: Tap, Double Tap, Pinch, Pan, Swipe, Rotate and Long press.
 * Each gesture of the framework can be config, "Long press" for example, can config time threshold for recognition.
