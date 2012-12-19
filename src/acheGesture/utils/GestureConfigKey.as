@@ -1,7 +1,7 @@
 package acheGesture.utils
 {
 	/**
-	 * All the keys for config of all the gestures
+	 * All the keys for configuring of all the gestures
 	 * 
 	 * @author qidonghui
 	 * 
@@ -9,18 +9,20 @@ package acheGesture.utils
 	public class GestureConfigKey
 	{
 		/**
-		 * 最大扩展区域，Tap手势使用到 
+		 * Max extended area size (pixel), used by Tap Gesture
+		 * @see acheGesture.data.TapGesture
 		 */		
 		public static const MAX_DIST:String = "max_dist";
 		
 		/**
-		 * 时间间隔，Hold手势使用到
+		 * Time threshold for recognizing hold gesture (long press gesture)
+		 * @see acheGesture.data.HoldGesture
 		 */		
 		public static const TIME_THRESHOLD:String = "timeThreshold";
 		
 		/**
-		 * 单点的Tap操作，Tap手势使用到， 
-		 * 布尔类型，确认是否是单点的“轻击”
+		 * Point mode for tap gesture
+		 * Boolean type, to config if use the "point type mode" for the tap gesture
 		 */		
 		public static const POINT_MODE:String = "pointMode";
 	}

@@ -1,5 +1,11 @@
 package acheGesture.data
 {
+	/**
+	 * @private
+	 *  
+	 * @author qidonghui
+	 * 
+	 */	
 	public class Gesture
 	{
 		/**

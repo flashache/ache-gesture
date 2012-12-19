@@ -17,7 +17,7 @@ package acheGesture
 	import starling.events.TouchPhase;
 	
 	/**
-	 * 
+	 * Main class for the AcheGesture framework. Use the GestureManager to link all the gestures to the target display object.
 	 * 
 	 * @author qidonghui
 	 */	
@@ -90,7 +90,7 @@ package acheGesture
 		private static var _gestures:Dictionary = new Dictionary(false);				
 		
 		/**
-		 * Constructor
+		 * Constructor<br/>
 		 * 
 		 * Creates a GestureManager instance
 		 *  
@@ -444,6 +444,9 @@ package acheGesture
 			
 		}
 		
+		/**
+		 * if all gesture behave simultaneously 
+		 */		
 		public function get allowSimultaneous():Boolean { return _allowSimultaneous; } 
 		public function set allowSimultaneous(value:Boolean):void
 		{

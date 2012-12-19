@@ -1,8 +1,9 @@
 package acheGesture.utils
 {
 	/**
-	 * 所有的手势（分为“连续”和“离散”手势）可能的状态 
 	 *
+	 * All the possbile states of the gestures include both discrete gestures and continuous gestures
+	 * 
 	 * @author qidonghui
 	 * 
 	 */	
@@ -22,8 +23,5 @@ package acheGesture.utils
 		
 		public static const CANCELLED:String = "cancelled";
 		
-		public function GestureState()
-		{
-		}
 	}
 }

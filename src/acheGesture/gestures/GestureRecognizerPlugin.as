@@ -69,11 +69,12 @@ package acheGesture.gestures
 		}
 		
 		/**
-		 * Inject customized gesture-recognizers.
+		 * Inject custom gesture-recognizers which extend this class.
+		 * 
 		 * @param gestures
 		 * 
 		 */		
-		public static function activate(gestures:Array):void 
+		public static function activate(gestures:Vector.<GestureRecognizerPlugin>):void 
 		{
 			var i:int = gestures.length;
 			while (--i > -1) {

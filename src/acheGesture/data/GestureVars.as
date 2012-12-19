@@ -41,20 +41,43 @@ package acheGesture.data
 		
 		/**
 		 * When GestureManager receive touch event from the target display object, it will call this callback function.
-		 * Callback function sent here should have one typed as Vector.<Touch> parameter for example: 
-		 * private function onTouch(ts: Vector.<Touch>): void
-		 *  
-		 * @param value
-		 * @return 
-		 * 
 		 */		
-		public function onTouch(value:Function):GestureVars { return _set("onTouch", value); }		
+		public function onTouch(value:Function):GestureVars { return _set("onTouch", value); }	
 		
-		public function onTap(value:Object):GestureVars  { return _set("tap", value); }		
+		/**
+		 * Tap gesture config object, recommend to use TapGesture class
+		 * @see acheGesture.TapGesture 
+		 */		
+		public function onTap(value:Object):GestureVars  { return _set("tap", value); }	
+		
+		/**
+		 * Double tap gesture config object, recommend to use DoubleTapGesture class
+		 * @see acheGesture.DoubleTapGesture 
+		 */	
 		public function onDoubleTap(value:Object):GestureVars { return _set("doubleTap", value); }
+
+		/**
+		 * Pan gesture config object, recommend to use PanGesture class
+		 * @see acheGesture.PanGesture 
+		 */	
 		public function onPan(value:Object):GestureVars { return _set("pan", value); }
+
+		/**
+		 * Swipe gesture config object, recommend to use SwipeGesture class
+		 * @see acheGesture.SwipeGesture 
+		 */	
 		public function onSwipe(value:Object):GestureVars { return _set("swipe", value); }
+		
+		/**
+		 * Hold gesture config object, recommend to use HoldGesture class
+		 * @see acheGesture.HoldGesture 
+		 */	
 		public function onHold(value:Object):GestureVars { return _set("hold", value); }
+		
+		/**
+		 * Pinch gesture config object, recommend to use PinchGesture class
+		 * @see acheGesture.PinchGesture 
+		 */	
 		public function onPinch(value:Object):GestureVars { return _set("pinch", value); }
 		
 		public function onTrigger(value:Function):GestureVars {
