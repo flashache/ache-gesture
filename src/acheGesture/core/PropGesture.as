@@ -14,33 +14,6 @@ package acheGesture.core
 		public var t:Object;
 		
 		/**
-		 * Possible，还有可能被识别 
-		 */		
-		public var p:Boolean = true;
-		
-		/**
-		 * 手势需要的触摸数量，对应numTouchesRequired 
-		 */		
-		public var n:int;
-		
-		/**
-		 * recognized
-		 * 是否已经识别出此手势，如果识别出来，计算链条将被打破，识别出来的手势会放到首位
-		 */		
-		public var r:Boolean;
-		
-		/**
-		 * failed
-		 * 一轮手势检测中已经确认监测失败 
-		 */		
-		public var f:Boolean;
-		
-		/**
-		 * 是否在hold链条里面等待被执行（requireGestureRecognizerToFail确定识别失败），或者被取消执行 （requireGestureRecognizerToFail确定已经识别）
-		 */		
-		public var h:Boolean;
-		
-		/**
 		 * Continuous Gesture，是否需要在确认手势之后不停得更新数据 
 		 */		
 		public var c:Boolean;
@@ -60,12 +33,40 @@ package acheGesture.core
 		 */		
 		public var p2:String;
 		
-		/** Priority **/
-		public var pr:int;
+		/**
+		 * 手势需要的触摸数量，对应numTouchesRequired 
+		 */		
+		public var n:int;
 		
 		public var _next:PropGesture;
 		
 		public var _prev:PropGesture;
+		
+		
+		/**
+		 * Possible，还有可能被识别 
+		 */		
+		public var p:Boolean = true;
+		
+		/**
+		 * recognized
+		 * 是否已经识别出此手势，如果识别出来，计算链条将被打破，识别出来的手势会放到首位
+		 */		
+		public var r:Boolean;
+		
+		/**
+		 * failed
+		 * 一轮手势检测中已经确认监测失败 
+		 */		
+		public var f:Boolean;
+		
+		/**
+		 * 是否在hold链条里面等待被执行（requireGestureRecognizerToFail确定识别失败），或者被取消执行 （requireGestureRecognizerToFail确定已经识别）
+		 */		
+		public var h:Boolean;
+		
+		/** Priority **/
+		public var pr:int;
 		
 		/**
 		 * requireGestureRecognizerToFail的源，
@@ -75,7 +76,7 @@ package acheGesture.core
 		
 		/**
 		 * requireGestureRecognizerToFail
-		 * 如果rg != null，说明此手势需要等待rg在识别失败的时候才开始识别 
+		 * 如果_f != null，说明此手势需要等待_f在识别失败的时候才开始识别 
 		 */		
 		public var _f:PropGesture;
 		

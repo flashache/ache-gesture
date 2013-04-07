@@ -19,9 +19,10 @@ package acheGesture.gestures
 		
 		/**
 		 * @private
-		 * valule to know if one gesture-recognizer is in the checking process
+		 * 如果_failed为true，说明这次识别确实已经失败，而不是介于成功或者失败中的不可知。
+		 * 例如对于长按来说，在短于阈值抬起手指，则确认识别失败，此时_failed是true，在下一次check value的时候这个值会被重置
 		 */	
-		public var _inProcess:Boolean = false;
+		public var _failed:Boolean = false;
 		
 		/** @private **/	
 		public var _g:GestureManager;
@@ -56,7 +57,7 @@ package acheGesture.gestures
 		protected var _result:AcheGestureEvent;
 		
 		/** @private **/
-		protected var _shouldReceiveTouch:Function;
+		public var _shouldReceiveTouch:Function;
 		
 		/** @private **/
 		public function GestureRecognizerPlugin(name:String="", priority:int=0, requireGestureRecognizerToFail:Boolean = false, continuous:Boolean = false, numTouchesRequired:int = 1)
@@ -88,8 +89,8 @@ package acheGesture.gestures
 			this._callBack = callback;
 			this._config = config;
 			this._g = g;			
-			if(_config != null && _config["shouldReceiveTouch"] != null) _shouldReceiveTouch = _config["shouldReceiveTouch"];			
-			_result = new AcheGestureEvent(AcheGestureEvent.ACHE_GESTURE, _g, GestureState.RECOGNIZED);		
+			if(_config != null && _config["shouldReceiveTouch"] != null) _shouldReceiveTouch = _config["shouldReceiveTouch"];
+			_result = new AcheGestureEvent(AcheGestureEvent.ACHE_GESTURE, _g);		
 			return true;
 		}
 		

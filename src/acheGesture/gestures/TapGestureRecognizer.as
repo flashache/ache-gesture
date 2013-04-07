@@ -20,13 +20,8 @@ package acheGesture.gestures
 		/**
 		 * 鼠标的有效区域，默认在对象延展出来的80像素之内都属于有效 
 		 * 可在config设置
-		 */		
+		 */
 		private var _max_drag_dist:uint = 80;
-		
-		/**
-		 * Tab手势的最大有效范围 
-		 */		
-		private var _r_max:Number = 30;
 		
 		private var _pointMode:Boolean = false;
 		
@@ -44,23 +39,20 @@ package acheGesture.gestures
 		
 		override public function checkGesture(ts:Vector.<Touch>):Boolean
 		{
-			if(_shouldReceiveTouch != null && !_shouldReceiveTouch())
-			{
-				return false;
-			}
-			
 			var t:Touch = ts[0];
 			if(t == null)  return false;
 			var validate:Boolean;
 			if(t.phase == TouchPhase.BEGAN)
 			{
 				gesturePossible(true);
-				_inProcess = true;	
+				_failed = false;
 			}
 			if(t.phase == TouchPhase.MOVED) 
 			{
 				if(_pointMode)
 				{
+					//对于单点模式的点击，一旦手指移动，则认为识别失败
+					_failed = true;
 					if(_possible) gesturePossible(false);
 				}else{
 					var rec:Rectangle = _g.target.getBounds(_g.target.stage);
@@ -81,7 +73,7 @@ package acheGesture.gestures
 			if(t.phase == TouchPhase.ENDED)
 			{
 				validate = _possible;				
-				_inProcess = false;
+				_failed = false;
 			}
 			return validate;
 		}

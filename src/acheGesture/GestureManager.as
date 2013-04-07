@@ -87,8 +87,8 @@ package acheGesture
 		/**
 		 * Use the target as key value to track all the gesture-managers has been created
 		 */		
-		private static var _gestures:Dictionary = new Dictionary(false);				
-		
+		private static var _gestures:Dictionary = new Dictionary(false);
+			
 		/**
 		 * Constructor<br/>
 		 * 
@@ -123,7 +123,8 @@ package acheGesture
 			target.addEventListener(TouchEvent.TOUCH, onTouched);
 		}
 		
-		private function linkGestureCondition():void
+		/** @private **/	
+		protected function linkGestureCondition():void
 		{
 			var pg:PropGesture = _firstG;
 			while (pg) {
@@ -210,52 +211,55 @@ package acheGesture
 //			trace(_firstG.t._gestureName + ">>>" + _firstG.r);
 		}
 		
-		private function onTouched(e:TouchEvent):void
+		/** @private **/
+		protected function onTouched(e:TouchEvent):void
 		{
 			var ts:Vector.<Touch> = e.getTouches(target);
 			if(ts.length == 0) return;
 			_ts = ts;
 			var t:Touch = ts[0];
-			_t = t;
-			
+			_t = t;	
 			var n:int = ts.length;		
-			if(t == null) return;
-			
+			if(t == null) return;			
 			if(t.phase == TouchPhase.BEGAN)
 			{
 				startGlobalX = t.globalX;
 				startGlobalY = t.globalY;
-			}
-			
+			}			
 			loopGesture();
 			if(vars.onTouch != null && vars.onTouch is Function) vars.onTouch(ts);
 			
 			function loopGesture():void
-			{				
-				var pg:PropGesture = _firstG;			
-				//////////////////////////////////////////////////////////////// TO DO 确认这段代码有没有必要
-				if(pg != null && pg.r && !pg.c)
+			{
+				var pg:PropGesture = _firstG;
+				if(pg == null) return;
+				
+				if(pg.r && !pg.c)
 				{
 					pg.r = false;
 					if(!_allowSimultaneous) return; 
 				}
-				////////////////////////////////////////////////////////////////
 				
-				if(pg != null && pg.r && !_allowSimultaneous && pg.c){	
-					
-					pg.r = pg.t[pg.p2](ts);////////////////----------TO DO 如果在change时候（update）返回false，说明这个连续手势也停止了
+				if(pg.r && !_allowSimultaneous && pg.c){						
+					pg.r = pg.t[pg.p2](ts);////////////////----------T如果在change时候（update）返回false，说明这个连续手势也停止了
 //					trace("****" + pg.r + ">>" + ts.length);
 				}else{
 					//用于确认是否需要更换手势识别链的顺序，将识别出来的，连续的手势链挪到第一个
 					var newFirstG:PropGesture;
-					while (pg) {
-						var r:Boolean = (pg.n == n) ? pg.t[pg.p1](ts) : false; //识别与否暂时使用强制相同的触摸点数n，考虑是否需要修改成 < n 
+					while (pg) {						
+						if(pg.t["_shouldReceiveTouch"] != null && !pg.t["_shouldReceiveTouch"]()) 
+						{
+							//如果当前手势不接收touch对象进行分析直接跳到下一个手势识别
+							pg = pg._next;
+							return;
+						}
+						var r:Boolean = (pg.n == n) ? pg.t[pg.p1](ts) : false; //识别与否暂时使用强制相同的触摸点数n，考虑是否需要修改成 < n						
 						if(r)
 						{
 							if(pg._o != null && pg._o.h) pg._o.h = false; 	//2012-11-26 如果识别出来了，并且有依赖这个手势识别失败作为条件的，则需要将hold状态消除。
-																			//虽然这个手势不一定执行（如果还依赖别的手势），但是依赖关机只关心是否能识别，不关心是否执行与否。							
+												//虽然这个手势不一定执行（如果还依赖别的手势），但是依赖关机只关心是否能识别，不关心是否执行与否。							
 							if(pg._f != null)
-							{						
+							{
 								if(pg._f.r)
 								{
 									if(!pg._f.c) pg._f.r = false; //连续的情况会持续执行，一直到end，而里离散的情况需要在这重置
@@ -291,7 +295,7 @@ package acheGesture
 						}else{
 							if(pg._o != null)
 							{
-								pg.f = (pg.t._inProcess) ? false : true;
+								pg.f = pg.t._failed;
 //								trace(pg.t._gestureName + ">>" + ts[0].phase + "::" + pg.f);
 								if(pg.f){
 									if(pg._o.h){
@@ -344,19 +348,44 @@ package acheGesture
 			}
 		}
 		
+		
+		
+		
+		
+		
+		
+		///////////////////////////////////
+		// public methods
+		///////////////////////////////////
 		/**
-		 * Get the Touch objects from the Starling
 		 *  
+		 * @param target
+		 * @param vars
+		 * @param allowSimultaneous
 		 * @return 
 		 * 
 		 */		
-		public function getTouches():Vector.<Touch> { return _ts; }	
+		public static function add(target:DisplayObject, vars:Object = null, allowSimultaneous:Boolean = false):GestureManager
+		{
+			var g:GestureManager = new GestureManager(target, vars, allowSimultaneous);
+			if(_gestures[target] == null) _gestures[target] = Vector.<GestureManager>([g]);
+			else{
+				var ref:Vector.<GestureManager> = _gestures[target];
+				ref.push(g);
+			}
+			return g;
+		}
+		
 		/**
-		 * Get the Touch object from the Starling 
-		 * @return 
+		 * Remove all of the gesture-managers linked to this target display object
+		 *  
+		 * @param target
 		 * 
 		 */		
-		public function getTouch():Touch { return _ts[0]; }
+		public static function removeAll(target:DisplayObject):void
+		{
+			
+		}
 		
 		/**
 		 * Add some gesutres to this gesture-recognizers' chain after the GestureManger instance created.
@@ -415,35 +444,27 @@ package acheGesture
 		}
 		
 		/**
+		 * Get the Touch objects from the Starling
 		 *  
-		 * @param target
-		 * @param vars
-		 * @param allowSimultaneous
 		 * @return 
 		 * 
 		 */		
-		public static function add(target:DisplayObject, vars:Object = null, allowSimultaneous:Boolean = false):GestureManager
-		{
-			var g:GestureManager = new GestureManager(target, vars, allowSimultaneous);
-			if(_gestures[target] == null) _gestures[target] = Vector.<GestureManager>([g]);
-			else{
-				var ref:Vector.<GestureManager> = _gestures[target];
-				ref.push(g);
-			}
-			return g;
-		}
-		
+		public function getTouches():Vector.<Touch> { return _ts; }	
 		/**
-		 * Remove all of the gesture-managers linked to this target display object
-		 *  
-		 * @param target
+		 * Get the Touch object from the Starling 
+		 * @return 
 		 * 
 		 */		
-		public static function removeAll(target:DisplayObject):void
-		{
-			
-		}
+		public function getTouch():Touch { return _ts[0]; }
 		
+		///////////////////////////////////
+		// event handlers
+		///////////////////////////////////
+		
+		
+		///////////////////////////////////
+		// getter/setters
+		///////////////////////////////////
 		/**
 		 * if all gesture behave simultaneously 
 		 */		
@@ -452,7 +473,6 @@ package acheGesture
 		{
 			_allowSimultaneous = value;
 		}
-		
 	}
 	
 }

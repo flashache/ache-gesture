@@ -46,39 +46,48 @@ package acheGesture.data
 		
 		/**
 		 * Tap gesture config object, recommend to use TapGesture class
-		 * @see acheGesture.TapGesture 
+		 * @see acheGesture.data.TapGesture 
 		 */		
 		public function onTap(value:Object):GestureVars  { return _set("tap", value); }	
 		
 		/**
 		 * Double tap gesture config object, recommend to use DoubleTapGesture class
-		 * @see acheGesture.DoubleTapGesture 
+		 * @see acheGesture.data.DoubleTapGesture 
 		 */	
 		public function onDoubleTap(value:Object):GestureVars { return _set("doubleTap", value); }
 
 		/**
 		 * Pan gesture config object, recommend to use PanGesture class
-		 * @see acheGesture.PanGesture 
+		 * @see acheGesture.data.PanGesture 
 		 */	
 		public function onPan(value:Object):GestureVars { return _set("pan", value); }
 
 		/**
 		 * Swipe gesture config object, recommend to use SwipeGesture class
-		 * @see acheGesture.SwipeGesture 
+		 * @see acheGesture.data.SwipeGesture 
 		 */	
 		public function onSwipe(value:Object):GestureVars { return _set("swipe", value); }
 		
 		/**
 		 * Hold gesture config object, recommend to use HoldGesture class
-		 * @see acheGesture.HoldGesture 
+		 * @see acheGesture.data.HoldGesture 
 		 */	
 		public function onHold(value:Object):GestureVars { return _set("hold", value); }
 		
 		/**
 		 * Pinch gesture config object, recommend to use PinchGesture class
-		 * @see acheGesture.PinchGesture 
+		 * @see acheGesture.data.PinchGesture 
 		 */	
 		public function onPinch(value:Object):GestureVars { return _set("pinch", value); }
+		
+		/**
+		 * Rotation gesture config object, recomenmend to use RotationGesture calss
+		 * @see acheGesture.data.RotateGesture 
+		 * @param value
+		 * @return 
+		 * 
+		 */		
+		public function onRotation(value:Object): GestureVars { return _set("rotate", value); }
 		
 		public function onTrigger(value:Function):GestureVars {
 			return _set("onTrigger", value);

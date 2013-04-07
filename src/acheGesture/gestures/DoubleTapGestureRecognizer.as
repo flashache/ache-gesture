@@ -46,7 +46,7 @@ package acheGesture.gestures
 			var validate:Boolean;
 			if(t.phase == TouchPhase.BEGAN)
 			{
-				_inProcess = true;
+				if(_count == 0) _failed = false;
 			}
 			if(t.phase == TouchPhase.MOVED)
 			{
@@ -63,8 +63,7 @@ package acheGesture.gestures
 					//需要记录第一次点击的位置
 					_sx = t.globalX;
 					_sy = t.globalY;
-				}else if(_count == 1)
-				{
+				}else if(_count == 1){
 					if(_validate && Math.abs(t.globalX - _sx) < _max_dist
 						&& Math.abs(t.globalY - _sy) < _max_dist)
 					{
@@ -72,8 +71,7 @@ package acheGesture.gestures
 						validate = true;
 					}
 					_count = 0;
-					_t.stop();			
-					_inProcess = false;
+					_t.stop();
 				}
 			}
 			return validate;
@@ -81,7 +79,7 @@ package acheGesture.gestures
 		
 		private function onCheck(e:TimerEvent):void
 		{
-			_inProcess = false;
+			_failed = true;
 			_validate = false;
 			_count = 0;
 			if(_requireGestureRecognizerToFail) _g.gestureRecognizerStateChange(this._gestureType, false);

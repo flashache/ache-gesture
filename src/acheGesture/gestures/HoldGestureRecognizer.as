@@ -42,22 +42,18 @@ package acheGesture.gestures
 				}
 				_timer.reset();
 				_timer.start();
-				_inProcess = true;
+				_failed = false;
 			}
 			if(t.phase == TouchPhase.MOVED) 
 			{
 				_validate = false;
-				_timer.reset();
 				_timer.stop();
-				_inProcess = false;
+				if(!_validate) _failed = true;
 			}
 			if(t.phase == TouchPhase.ENDED) 
 			{
-				_timer.reset();
+				_validate = false;
 				_timer.stop();
-				_inProcess = _validate ? true : false;
-//				_inProcess = false;
-//				_validate = false;
 			}
 			return _validate;
 		}
@@ -68,23 +64,13 @@ package acheGesture.gestures
 			return super._onInitGesture(callback, config, g);
 		}
 		
-		override public function executeGesturRecognizedCallback():void
-		{
-			super.executeGesturRecognizedCallback();
-			_validate = false;
-		}
-		
 		private function onHoldGestureValidate(e:TimerEvent):void
 		{
 			if(_g._firstG.r && !_g.allowSimultaneous) return;
-//			if(_callBack.recognized) _callBack.recognized();
-//			executeGesturRecognizedCallback();
 			_validate = true;
-//			_inProcess = false;
-//			trace("======================");
-//			if(_requireGestureRecognizerToFail) _g.gestureRecognizerStateChange(this._gestureName, true);
 			_g.gestureRecognizerStateChange(this._gestureType, true);
 		}
 		
 	}
+	
 }

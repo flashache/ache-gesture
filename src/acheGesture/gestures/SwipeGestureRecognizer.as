@@ -37,7 +37,7 @@ package acheGesture.gestures
 			{
 				_dx = _dy = _interval = _preTimeStamp = 0;
 			}else if(t.phase == TouchPhase.MOVED){
-				_inProcess = true;
+//				_inProcess = true;
 				_dx = t.globalX - t.previousGlobalX;
 				_dy = t.globalY - t.previousGlobalY;
 				_interval = t.timestamp - _preTimeStamp;
@@ -47,7 +47,7 @@ package acheGesture.gestures
 				{
 					validate = true;
 				}
-				_inProcess = false;
+//				_inProcess = false;
 			}
 			return validate;
 		}

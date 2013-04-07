@@ -2,6 +2,8 @@ package acheGesture.events
 {
 	import acheGesture.GestureManager;
 	
+	import flash.geom.Point;
+	
 	import starling.display.DisplayObject;
 	import starling.events.Event;
 
@@ -39,6 +41,22 @@ package acheGesture.events
 		public var dy:Number;
 		
 		/**
+		 *  
+		 */		
+		public var localLocation:Point;
+		
+		/**
+		 * delta scale value
+		 * Pinch gesutre use this value
+		 */		
+		public var dScale:Number;
+		
+		/**
+		 *  The rotation of the gesture in radians since its last change.
+		 */		
+		public var rotation:Number;
+		
+		/**
 		 * time interval for some specific gesture
 		 * Swipe gesture for example, interval is the time interval when swip happen 
 		 */		
@@ -58,7 +76,7 @@ package acheGesture.events
 		 * @param state		What state of the gesture when this happen, see ache.Gestrue.utils.GestureState
 		 * 
 		 */		
-		public function AcheGestureEvent(type:String, gm:GestureManager, state:String)
+		public function AcheGestureEvent(type:String, gm:GestureManager, state:String = "")
 		{
 			this.gm = gm;
 			this.state = state;
