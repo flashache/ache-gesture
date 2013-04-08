@@ -21,6 +21,11 @@ package acheGesture.gestures
 		private var _x2:Number;
 		private var _y2:Number;
 		
+		private var _x3:Number;
+		private var _y3:Number;
+		private var _x4:Number;
+		private var _y4:Number;
+		
 		private var _cx:Number = 0;
 		private var _cy:Number = 0;
 		
@@ -29,18 +34,14 @@ package acheGesture.gestures
 		
 		private var _localLocation:Point;
 		
-		private var _d1X:Number;
-		private var _d1Y:Number;
-		
-		private var _d2X:Number;
-		private var _d2Y:Number;
-		
 		private var _angle1:Number;
 		private var _angle2:Number;
 		
 		public function RotationGestureRecognizer(priority:int=0, requireGestureRecognizerToFail:Boolean=false)
 		{
 			super(GestureType.ROTATE, priority, requireGestureRecognizerToFail, true, 2);
+			_x1 = _y1 = _x2 = _y2 = 0;
+			_angle1 = 0;
 		}
 		
 		override public function checkGesture(ts:Vector.<Touch>):Boolean
@@ -49,6 +50,7 @@ package acheGesture.gestures
 			{
 				_cx = 0;
 				_offsetX = _offsetY = 0;
+				_angle1 = _angle2 = 0;
 				return false;
 			}
 			
@@ -63,26 +65,12 @@ package acheGesture.gestures
 				return false;
 			}
 			
-			if(_cx != 0) return true;
-			_cx = (t1.globalX + t2.globalX) * 0.5;
-			_cy = (t1.globalY + t2.globalY) * 0.5;
-			_d1X = t1.globalX - t2.globalX;
-			_d1Y = t1.globalY - t2.globalY;
-			
-			_localLocation = _g.target.globalToLocal(new Point(_cx, _cy), _localLocation);
-			
-			_angle1 = Math.atan2(t1.globalX  - _cx, t1.globalY - _cy);
-			
-			if(_callBack.changed)
-			{
-				_result.dx = _offsetX;
-				_result.dy = _offsetY;
-				_result.rotation = 0;
-				_result.dScale = 1;
-				_result.localLocation = _localLocation;
-				_callBack.changed(_result);
-//				_callBack.changed(_offsetX, _offsetY, _localLocation.x, _localLocation.y, 1);
-			}
+			if(_x1 != 0) return true;			
+			_x1 = t1.globalX;
+			_y1 = t1.globalY;
+			_x2 = t2.globalX;
+			_y2 = t2.globalY;			
+			_angle1 = 0;
 			return true;
 		}
 		
@@ -104,33 +92,56 @@ package acheGesture.gestures
 				return false;
 			}
 			
+			_x3 = t1.globalX;
+			_y3 = t1.globalY;
+			_x4 = t2.globalX;
+			_y4 = t2.globalY;
+			var div:Number = 0;
+			
+			var d1:Number = new Point(_x3 - _x1, _y3 - _y1).length;
+			var d2:Number = new Point(_x4 - _x2, _y4 - _y2).length;
+			if(d1 == 0 && d2 == 0)
+			{
+				_x1 = _x3;
+				_y1 = _y3;
+				_x2 = _x4;
+				_y2 = _y4;
+				return true;
+			}
+			
 			var prevX:Number = _cx;
 			var prevY:Number = _cy;
 			
-			_cx = (t1.globalX + t2.globalX) * 0.5;
-			_cy = (t1.globalY + t2.globalY) * 0.5;
+			div = d1 / (d1 + d2);
+			_cx = _x1 + (_x2 - _x1) * div;
+			_cy = _y1 + (_y2 - _y1) * div;
+			
 			_offsetX = _cx - prevX;
 			_offsetY = _cy - prevY;
-			_d2X = t1.globalX - t2.globalX;
-			_d2Y = t1.globalY - t2.globalY;
-			_localLocation = _g.target.globalToLocal(new Point(_cx, _cy), _localLocation);
 			
-			var scale:Number = new Point(_d2X, _d2Y).length / new Point(_d1X, _d1Y).length;
-			_angle2 = Math.atan2(t1.globalX - _cx, t1.globalY - _cy);
+			_localLocation = _g.target.globalToLocal(new Point(_cx, _cy), _localLocation);
+			if(_angle1 == 0)
+			{
+				_angle1 = Math.atan2(_x1  - _cx, _y1 - _cy);
+				_offsetX = _offsetY = 0;
+			}		
+			_angle2 = Math.atan2(_x3 - _cx, _y3 - _cy);
 			var rotation:Number = _angle1 -  _angle2;			
-			_d1X = _d2X;
-			_d1Y = _d2Y;
 			_angle1 = _angle2;
 			
-			if(_callBack.changed)
+			if(_callBack.changed)		
 			{
-				_result.dx = _offsetX;
-				_result.dy = _offsetY;
-				_result.dScale = scale;
 				_result.rotation = rotation;
 				_result.localLocation = _localLocation;
+				_result.dx = _offsetX;
+				_result.dy = _offsetY;
 				_callBack.changed(_result);
 			}
+			
+			_x1 = _x3;
+			_y1 = _y3;
+			_x2 = _x4;
+			_y2 = _y4;
 			
 			//返回true，说明这个连续的手势开始作用，当返回false的时候，说明这个连续的手势停止执行
 			return true;
