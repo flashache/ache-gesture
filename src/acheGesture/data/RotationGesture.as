@@ -20,10 +20,12 @@ img.transformationMatrix = matrix;
 	 */	
 	public class RotationGesture extends Gesture
 	{
-		public function RotationGesture(changed:Function)
+		public function RotationGesture(began:Function, changed:Function, ended:Function = null)
 		{
 			super(GestureType.ROTATE);
+			this.onBegan(began);
 			this.onChanged(changed);
+			this.onEnded(ended);
 		}
 	}
 }

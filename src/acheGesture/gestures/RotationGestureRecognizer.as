@@ -16,6 +16,8 @@ package acheGesture.gestures
 	 */
 	public class RotationGestureRecognizer extends GestureRecognizerPlugin
 	{
+		private var _hasBegan:Boolean = false;
+		
 		private var _x1:Number;
 		private var _y1:Number;
 		private var _x2:Number;
@@ -51,9 +53,11 @@ package acheGesture.gestures
 				_cx = 0;
 				_offsetX = _offsetY = 0;
 				_angle1 = _angle2 = 0;
+				_hasBegan = false;
 				return false;
 			}
 			
+			var validate:Boolean = false;
 			var t1:Touch = ts[0];
 			var t2:Touch = ts[1];
 			
@@ -62,22 +66,32 @@ package acheGesture.gestures
 			{
 				_cx = 0;
 				_offsetX = _offsetY = 0;
-				return false;
-			}
-			
-			if(_x1 != 0) return true;			
-			_x1 = t1.globalX;
-			_y1 = t1.globalY;
-			_x2 = t2.globalX;
-			_y2 = t2.globalY;			
-			_angle1 = 0;
-			return true;
+				if(_hasBegan) validate = true;
+				else validate = false;
+			}else{
+				if(!_hasBegan && _callBack.began)  gestureBegan();
+				_hasBegan = true;
+				validate = true;
+				
+				if(_x1 != 0){
+					
+				}else{
+					_x1 = t1.globalX;
+					_y1 = t1.globalY;
+					_x2 = t2.globalX;
+					_y2 = t2.globalY;			
+					_angle1 = 0;
+				}
+			}			
+			return validate;
 		}
 		
 		override public function updateValue(ts:Vector.<Touch>):Boolean
 		{
 			if(ts.length != 2)
 			{
+				_hasBegan = false;
+				gestureEnded();
 				_cx = 0;
 				return false;
 			}
@@ -89,6 +103,8 @@ package acheGesture.gestures
 			{
 				_cx = 0;
 				_offsetX = _offsetY = 0;
+				_hasBegan = false;
+				gestureEnded();
 				return false;
 			}
 			
