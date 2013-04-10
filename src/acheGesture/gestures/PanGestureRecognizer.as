@@ -60,8 +60,6 @@ package acheGesture.gestures
 			var dy:Number = t.globalY - t.previousGlobalY;
 			if(_callBack.changed)
 			{
-//				_g.showInfo(this._gestureName + " -> changed");
-//				var result:AcheGestureEvent = new AcheGestureEvent(AcheGestureEvent.ACHE_GESTURE, _g, GestureState.BEGAN);
 				_result.state = GestureState.BEGAN;
 				_result.dx = dx;
 				_result.dy = dy;

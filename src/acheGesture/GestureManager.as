@@ -253,7 +253,7 @@ package acheGesture
 							pg = pg._next;
 							return;
 						}
-						var r:Boolean = (pg.n == n) ? pg.t[pg.p1](ts) : false; //识别与否暂时使用强制相同的触摸点数n，考虑是否需要修改成 < n						
+						var r:Boolean = (pg.n >= n) ? pg.t[pg.p1](ts) : false; //识别与否暂时使用强制相同的触摸点数n					
 						if(r)
 						{
 							if(pg._o != null && pg._o.h) pg._o.h = false; 	//2012-11-26 如果识别出来了，并且有依赖这个手势识别失败作为条件的，则需要将hold状态消除。
@@ -347,12 +347,6 @@ package acheGesture
 				}
 			}
 		}
-		
-		
-		
-		
-		
-		
 		
 		///////////////////////////////////
 		// public methods

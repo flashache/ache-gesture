@@ -42,37 +42,39 @@ package acheGesture.gestures
 		public function RotationGestureRecognizer(priority:int=0, requireGestureRecognizerToFail:Boolean=false)
 		{
 			super(GestureType.ROTATE, priority, requireGestureRecognizerToFail, true, 2);
-			_x1 = _y1 = _x2 = _y2 = 0;
-			_angle1 = 0;
+			
 		}
 		
 		override public function checkGesture(ts:Vector.<Touch>):Boolean
-		{
+		{	
+			var validate:Boolean = false;
 			if(ts.length != 2)
 			{
 				_cx = 0;
 				_offsetX = _offsetY = 0;
 				_angle1 = _angle2 = 0;
-				_hasBegan = false;
-				return false;
+				if(_hasBegan) validate = true;
+				else validate = false;
+				return validate;
 			}
 			
-			var validate:Boolean = false;
 			var t1:Touch = ts[0];
 			var t2:Touch = ts[1];
 			
 			//如果某一个手指抬起来了，此手势结束识别
 			if(t1.phase == TouchPhase.ENDED || t2.phase == TouchPhase.ENDED)
 			{
-				_cx = 0;
-				_offsetX = _offsetY = 0;
 				if(_hasBegan) validate = true;
 				else validate = false;
 			}else{
 				if(!_hasBegan && _callBack.began)  gestureBegan();
-				_hasBegan = true;
-				validate = true;
-				
+				if(!_hasBegan)
+				{
+					_x1 = _y1 = _x2 = _y2 = 0;
+					_angle1 = 0;
+					_hasBegan = true;
+				}		
+				validate = true;		
 				if(_x1 != 0){
 					
 				}else{
@@ -92,8 +94,9 @@ package acheGesture.gestures
 			{
 				_hasBegan = false;
 				gestureEnded();
-				_cx = 0;
-				return false;
+				_x1 = _y1 = _x2 = _y2 = 0;
+				_angle1 = 0;
+				return _hasBegan;
 			}
 			
 			var t1:Touch = ts[0];
@@ -101,11 +104,11 @@ package acheGesture.gestures
 			
 			if(t1.phase == TouchPhase.ENDED || t2.phase == TouchPhase.ENDED)
 			{
-				_cx = 0;
-				_offsetX = _offsetY = 0;
 				_hasBegan = false;
 				gestureEnded();
-				return false;
+				_x1 = _y1 = _x2 = _y2 = 0;
+				_angle1 = 0;
+				return _hasBegan;
 			}
 			
 			_x3 = t1.globalX;
@@ -160,7 +163,7 @@ package acheGesture.gestures
 			_y2 = _y4;
 			
 			//返回true，说明这个连续的手势开始作用，当返回false的时候，说明这个连续的手势停止执行
-			return true;
+			return _hasBegan;
 		}
 	}
 }
