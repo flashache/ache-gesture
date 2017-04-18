@@ -11,7 +11,7 @@ AcheGesture Introduction:[http://www.flashache.com/2012/12/17/ache-gesture-intro
 
 ASDoc:[http://flashache.github.com/ache-gesture/asdoc/index.html](http://flashache.github.com/ache-gesture/asdoc/index.html)
 
-##Features:
+## Features:
 * Provide seven basic gestures, include: Tap, Double Tap, Pinch, Pan, Swipe, Rotate and Long press.
 * Each gesture of the framework can be config, "Long press" for example, can config time threshold for recognition.
 * Handle conflict between different gestures, like one gesture recognition requeres another recognition to fail(requireGestureRecognizerToFail), recognition priority, simultaneous effect and so on.
@@ -19,16 +19,16 @@ ASDoc:[http://flashache.github.com/ache-gesture/asdoc/index.html](http://flashac
 * Extendable, AcheGesture framework can be extended for new gesture-recognizers according to the projects use GestureRecognizerPlugin, and certain gesture-recognizers can be activate when needed.
 * Free and open source, can be used under any circumstances.
 
-##Why AcheGesture?
-###1. Needs for re-useable code
+## Why AcheGesture?
+### 1. Needs for re-useable code
 Starling provides touch event, include handling both single and multi touch, but does not encapsulate for specific gestures, for example "Swipe Gesture". When someone implements one specific gesture-recognizers, codes for re-uses is one basic needs for encapsulation.
-###2. Needs encapsulation for handling complex gesture-recognizers' relationship
+### 2. Needs encapsulation for handling complex gesture-recognizers' relationship
 This reason is the main reason why I wrote the AcheGesture. For Instance, if one display object linked to a Tap Gesture-recognizer and a Double Tap Gesture-recognizer, when user taps twice in a short time, there will be four different results (yes, 4, no kidding --!) as following: 1. two taps and one double tap, 2. one tap and one double tap, 3. two taps, 4. one double tap. A little surprised? Especially the second result a little hard to image why. Dont worry i will explain it in the Tap Example tutorial(coming soon). Actually, in normal case, we expect the 3rd and the 4th result. So come along the "requireGestureRecognizerToFail" relationship between two gestures. In this case, tap gesture recognize require double tap gesture recognize to fail, which means only when the framework try to recognized the double tap and fail then it will try to recognize the tap gesture. When more gestures come along with this kind of relationship, it become very complex for some simple needs, so we need some encapsulation for this certain logic.
-###3. Needs handling simultaneous gestures' effect
+### 3. Needs handling simultaneous gestures' effect
 This is also a common needs, but can not be done easily by sigle touch object provided by Starling Framework. For example, when use Pinch gesture to scale one display object, in the same time, user can also pan or so called drag the object, even may also rotate the object simultaneously. So we need to handle this kind of situation.
 
-##How to use AcheGesture:
-###Step1: Define gesture object
+## How to use AcheGesture:
+### Step1: Define gesture object
 Use tap gesture as an example, this gesture has two states: recognized and possible. Use the TapGesture class to define the tap gesture object, send the reference for the callback function for these two states.
 
 ```
@@ -65,7 +65,7 @@ GestureManager.add(_btn, {"tap": {"recognized": onTapRecognized, "possible": onT
 ```
 Just your choice for using which kind, personally i recommend to use the data type in the acheGesture.data package to config the gestures.
 
-###Step3: Handling the gestures’ state callback
+### Step3: Handling the gestures’ state callback
 All the gestures’ stat callback function will need to receive one parmeter, e: AcheGestureEvent. This object has all the properties need to send out from the framework. Use tap gesture as example, when in the “possible” state, you can check the e.possible to know if the tap gesture is possible to recognize in certain time and then to show the different appearance according to the state. Details will be exampled in the Tap Example tutorial.
 
 ```
